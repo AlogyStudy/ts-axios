@@ -11,9 +11,9 @@ module.exports = {
      * 把不同的demo放到子目录中
      * app.ts 作为 webpack构建的入口文件
      * entires 收集了多目录个入口文件，并且每个入口还引入了一个用于热更新的文件
-     * entires 是一个对象，key 为目录名
+     * dir 是一个对象，key 为目录名
      */
-    entry: fs.readFileSyns(__dirname).reduce((entires, dir) => {
+    entry: fs.readdirSync(__dirname).reduce((entires, dir) => {
         const fullDir = path.join(__dirname, dir)
         const entry = path.join(fullDir, 'app.ts')
         if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
@@ -34,7 +34,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: '/\.ts$/',
+                test: /\.ts$/,
                 enforce: 'pre',
                 use: [
                     {
@@ -43,7 +43,7 @@ module.exports = {
                 ]
             },
             {
-                test: '/\.tsx?$/',
+                test: /\.tsx?$/,
                 use: [
                     {
                         loader: 'ts-loader',
