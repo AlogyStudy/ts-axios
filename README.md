@@ -46,3 +46,4 @@ npm run commit
 - data 处理
 - url 处理
 - headers 处理
+- req data

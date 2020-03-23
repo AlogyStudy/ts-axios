@@ -1,4 +1,5 @@
 import axios from '../../src/index'
+import { readSync } from 'fs'
 
 // axios({
 //     method: 'get',
@@ -44,6 +45,8 @@ axios({
         a: 1,
         b: 2
     }
+}).then(res => {
+    console.log(res, 'res')
 })
 
 axios({
