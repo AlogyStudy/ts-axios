@@ -35,3 +35,14 @@ npm install
 ```
 npm install webpack webpack-dev-middleware webpack-hot-middleware ts-loader tslint-loader express body-parser --save-dev
 ```
+
+commit:
+```
+git add .
+npm run commit
+```
+
+- xhr 主题逻辑
+- data 处理
+- url 处理
+- headers 处理
