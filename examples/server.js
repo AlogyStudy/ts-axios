@@ -39,6 +39,25 @@ router.post('/base/post', function(req, res) {
     res.json(req.body)
 })
 
+router.get('/error/get', function(req, res) {
+    if (Math.random() > 0.5) {
+        res.json({
+            msg: 'hello world'
+        })
+    } else {
+        res.static(500)
+        res.end()
+    }
+})
+
+router.get('/error/timeout', function(req, res) {
+    setTimeout(() => {
+        res.json({
+            msg: 'hello world'
+        })
+    }, 2000)
+})
+
 router.post('/base/buffer', function(req, res) {
     let msg = []
     req.on('data', (chunk) => {

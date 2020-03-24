@@ -42,8 +42,21 @@ git add .
 npm run commit
 ```
 
+`ts-axios`基础功能实现
 - xhr 主题逻辑
-- data 处理
-- url 处理
-- headers 处理
-- req data
+- 处理请求body数据
+- 处理请求headers
+- 获取响应
+- 处理响应headers
+- 处理响应 data
+
+`ts-axios`异常情况处理
+- 错误处理
+    网络异常错误
+    超时错误
+    非200状态码
+- 错误信息增强
+    创建AxiosError类
+    createError方法应用
+    导出类型定义
+
