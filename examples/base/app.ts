@@ -1,5 +1,4 @@
 import axios from '../../src/index'
-import { readSync } from 'fs'
 
 // axios({
 //     method: 'get',

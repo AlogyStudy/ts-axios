@@ -1,5 +1,6 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
 import { parseHeaders } from './helpers/headers'
+import { createError } from './helpers/error'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
@@ -23,14 +24,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         statusTxet: req.statusText,
         headers: responseHeaders,
         config,
-        requeset: req
+        request: req
       }
       handleResponse(response)
     }
 
     // 网络错误
     req.onerror = function handleError() {
-      reject(new Error('Network Error'))
+      reject(createError('Network Error', config, null, req))
+      // reject(new Error('Network Error'))
     }
 
     // 延时处理
@@ -39,7 +41,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     req.ontimeout = function handleTimeout() {
-      reject(new Error(`Timeout of ${timeout} ms exceded`))
+      reject(createError(`Timeout of ${timeout} ms exceded`, config, 'ECONNABORTED', req))
     }
 
     req.open(method.toUpperCase(), url, true)
@@ -58,7 +60,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (res.status >= 200 && res.status < 300) {
         resolve(res)
       } else {
-        reject(new Error(`Requeset failed with status code ${res.status}`))
+        reject(
+          createError(`Requeset failed with status code ${res.status}`, config, null, req, res)
+        )
       }
     }
   })

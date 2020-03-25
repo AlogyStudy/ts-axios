@@ -50,13 +50,27 @@ npm run commit
 - 处理响应headers
 - 处理响应 data
 
+> Error
+
 `ts-axios`异常情况处理
 - 错误处理
-    网络异常错误
-    超时错误
-    非200状态码
+```
+网络异常错误
+超时错误
+非200状态码
+```
 - 错误信息增强
-    创建AxiosError类
-    createError方法应用
-    导出类型定义
+```
+创建AxiosError类
+createError方法应用
+导出类型定义
+```
+
+
+源码中能够使用类型定义，外部无法使用，需要手动导出类型定义。
+```
+export * from './types'
+```
+
+> 扩展接口
 
