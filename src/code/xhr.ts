@@ -1,6 +1,6 @@
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
-import { parseHeaders } from './helpers/headers'
-import { createError } from './helpers/error'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
+import { parseHeaders } from '../helpers/headers'
+import { createError } from '../helpers/error'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       reject(createError(`Timeout of ${timeout} ms exceded`, config, 'ECONNABORTED', req))
     }
 
-    req.open(method.toUpperCase(), url, true)
+    req.open(method.toUpperCase(), url!, true)
 
     Object.keys(headres).forEach(name => {
       if (data === null && name.toLowerCase() === 'content-type') {

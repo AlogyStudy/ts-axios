@@ -74,3 +74,6 @@ export * from './types'
 
 > 扩展接口
 
+1. 定义`Axios`类
+2. mkdir `code` 存放axios核心代码
+3. 混合对象

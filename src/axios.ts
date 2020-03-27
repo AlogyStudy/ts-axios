@@ -1,44 +1,16 @@
-// Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
-// import "core-js/fn/array.find"
-// ...
-// export default class DummyClass {}
+import { AxiosInatance } from './types'
+import Axios from './code/Axios'
+import { extend } from './helpers/util'
 
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
-import xhr from './xhr'
-import { buildURL } from './helpers/url'
-import { transformRequest, transformResponse } from './helpers/data'
-import { processHeaders } from './helpers/headers'
+function createInstance(): AxiosInatance {
+  const context = new Axios()
+  const instance = Axios.prototype.requset.bind(context)
 
-function axios(config: AxiosRequestConfig): AxiosPromise {
-  processConfig(config)
-  return xhr(config).then(res => {
-    return transformResponseData(res)
-  })
+  // 拷贝
+  extend(instance, context)
+  return instance as AxiosInatance
 }
 
-function processConfig(config: AxiosRequestConfig): void {
-  config.url = transformURL(config)
-  config.headres = transformHaders(config)
-  config.data = transformRequestData(config)
-}
-
-function transformURL(config: AxiosRequestConfig): string {
-  const { url, params } = config
-  return buildURL(url, params)
-}
-
-function transformRequestData(config: AxiosRequestConfig): any {
-  return transformRequest(config.data)
-}
-
-function transformHaders(config: AxiosRequestConfig): any {
-  const { headres = {}, data } = config
-  return processHeaders(headres, data)
-}
-
-function transformResponseData(res: AxiosResponse): AxiosResponse {
-  res.data = transformResponse(res.data)
-  return res
-}
+const axios = createInstance()
 
 export default axios
