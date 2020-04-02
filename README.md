@@ -77,3 +77,6 @@ export * from './types'
 1. 定义`Axios`类
 2. mkdir `code` 存放axios核心代码
 3. 混合对象
+
+> Axios函数重载
+

@@ -67,4 +67,6 @@ export interface Axios {
 
 export interface AxiosInatance extends Axios {
   (config: AxiosRequestConfig): AxiosPromise
+
+  (url: string, config?: AxiosRequestConfig): AxiosPromise
 }

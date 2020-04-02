@@ -71,6 +71,16 @@ router.post('/base/buffer', function(req, res) {
     })
 })
 
+router.post('/extend/post', function(req, res) {
+    res.json(req.body)
+})
+
+router.get('/extend/get', function(req, res) {
+    res.json({
+        msg: 'hello world get'
+    })
+})
+
 app.use(router)
 
 const port = process.env.PORT || 8080

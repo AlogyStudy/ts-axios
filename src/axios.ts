@@ -4,7 +4,7 @@ import { extend } from './helpers/util'
 
 function createInstance(): AxiosInatance {
   const context = new Axios()
-  const instance = Axios.prototype.requset.bind(context)
+  const instance = Axios.prototype.request.bind(context)
 
   // 拷贝
   extend(instance, context)
