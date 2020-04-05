@@ -28,8 +28,8 @@ export interface AxiosRequestConfig {
   timeout?: number
 }
 
-export interface AxiosResponse {
-  data: any
+export interface AxiosResponse<T = any> {
+  data: T
   status: number
   statusTxet: string
   headers: any
@@ -37,7 +37,8 @@ export interface AxiosResponse {
   request: any
 }
 
-export interface AxiosPromise extends Promise<AxiosResponse> {}
+export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {
+}
 
 export interface AxiosError extends Error {
   isAxiosError: boolean
@@ -48,25 +49,25 @@ export interface AxiosError extends Error {
 }
 
 export interface Axios {
-  request(config: AxiosRequestConfig): AxiosPromise
+  request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
-  get(url: string, config?: AxiosRequestConfig): AxiosResponse
+  get<T = any>(url: string, config?: AxiosRequestConfig): AxiosResponse<T>
 
-  options(url: string, config?: AxiosRequestConfig): AxiosResponse
+  options<T = any>(url: string, config?: AxiosRequestConfig): AxiosResponse<T>
 
-  delete(url: string, config?: AxiosRequestConfig): AxiosResponse
+  delete<T = any>(url: string, config?: AxiosRequestConfig): AxiosResponse<T>
 
-  head(url: string, config?: AxiosRequestConfig): AxiosResponse
+  head<T = any>(url: string, config?: AxiosRequestConfig): AxiosResponse<T>
 
-  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponse
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponse<T>
 
-  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponse
+  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponse<T>
 
-  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponse
+  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosResponse<T>
 }
 
 export interface AxiosInatance extends Axios {
-  (config: AxiosRequestConfig): AxiosPromise
+  <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
-  (url: string, config?: AxiosRequestConfig): AxiosPromise
+  <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
