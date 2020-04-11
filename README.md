@@ -80,3 +80,48 @@ export * from './types'
 
 > Axios函数重载
 
+增加参数判断，来区分参数，实现重载。
+
+```javascript
+request(url: any, config?: any): AxiosPromise {
+    if (typeof url === 'string') {
+        if (!config) {
+        config = []
+        }
+        config.url = url
+    } else {
+        config = url
+    }
+    return dispatchRequest(config)
+}
+```
+> 拦截器
+
+增加`use`, `eject`方法。
+
+```typescript
+export interface AxiosInstanceManager<T> {
+  use(resolved: ResolvedFn<T>, rejected: RejectedFn): number
+  eject(id: number): void
+}
+export interface ResolvedFn<T> {
+  (val: T): T | Promise<T>
+}
+export interface RejectedFn {
+  (error: any): any
+}
+```
+
+> 拦截器的链式调用
+
+```javascript
+const chain: PromiseChain<any>[] = [{
+  resolved: dispatchRequest,
+  rejected: undefined
+}]
+```
+
+> 配置叠加
+
+合并策略：
+默认配置的对象与自定义对象的合并，有些字段需要有单独的合并策略。

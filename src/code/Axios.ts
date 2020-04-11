@@ -1,7 +1,29 @@
-import { AxiosRequestConfig, AxiosPromise, Method } from '../types'
+import { AxiosRequestConfig, AxiosPromise, Method, AxiosResponse, ResolvedFn, RejectedFn } from '../types'
 import dispatchRequest from './dispatchRequest'
+import InterfaceManager from './InstanceManager'
+
+interface Intercepotors {
+  request: InterfaceManager<AxiosRequestConfig>
+  response: InterfaceManager<AxiosResponse> 
+}
+
+interface PromiseChain<T> {
+  resolved: ResolvedFn<T> | ((config: AxiosRequestConfig) => AxiosPromise)
+  rejected?: RejectedFn
+}
 
 export default class Axios {
+  defaults: AxiosRequestConfig
+  interceptors: Intercepotors
+
+  constructor(initConfig: AxiosRequestConfig) {
+    // 添加拦截器
+    this.interceptors = {
+      request: new InterfaceManager<AxiosRequestConfig>(),
+      response: new InterfaceManager<AxiosResponse>()
+    }
+    this.defaults = initConfig
+  }
   request(url: any, config?: any): AxiosPromise {
     if (typeof url === 'string') {
       if (!config) {
@@ -11,6 +33,12 @@ export default class Axios {
     } else {
       config = url
     }
+
+    const chain: PromiseChain<any>[] = [{
+      resolved: dispatchRequest,
+      rejected: undefined
+    }]
+
     return dispatchRequest(config)
   }
 
