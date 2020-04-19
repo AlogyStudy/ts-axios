@@ -1,11 +1,18 @@
 import { AxiosRequestConfig } from "../types";
+import { isPlainObject, deepMerge } from "../helpers/util";
 
 const starts = Object.create(null)
 
 const startKeysFromVal2 = ['url', 'params', 'data']
 
+const startKeysDeepMerge = ['headers']
+
 startKeysFromVal2.map(key => {
     starts[key] = fromValu2Strat
+})
+
+startKeysDeepMerge.map(key => {
+    starts[key] = deepMergeStart
 })
 
 export default function mergetConfig(config1: AxiosRequestConfig, config2?: AxiosRequestConfig): AxiosRequestConfig {
@@ -48,4 +55,21 @@ function defaultStart(val1: any, val2: any): any {
  */
 function fromValu2Strat(val1: any, val2: any): any {
     if (typeof val2 !== 'undefined') return val2
+}
+
+/**
+ * 深度合并
+ * @param val1 
+ * @param val2 
+ */
+function deepMergeStart(val1: any, val2: any): any {
+    if (isPlainObject(val2)) {
+        return deepMerge(val1, val2)
+    } else if (typeof val2 !== 'undefined') {
+        return val2
+    } else if (isPlainObject(val1)) {
+        return deepMerge(val1)
+    } else if (typeof val1 !== 'undefined') {
+        return val1
+    }
 }

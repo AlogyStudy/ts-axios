@@ -18,3 +18,30 @@ export function extend<T, U>(to: T, from: U): T & U {
   }
   return to as T & U
 }
+
+
+/**
+ * 合并深层对象
+ * @param objs 
+ */
+export function deepMerge(...objs: any[]): any {
+  const result = Object.create(null)
+
+  objs.map(obj => {
+    if (obj) {
+      Object.keys(obj).map(key => {
+        const val = obj[key]
+        if (isPlainObject(val)) {
+          if (isPlainObject(result[key])) { // result[key]是否已经存在
+            result[key] = deepMerge(result[key], val)
+          } else {
+            result[key] = deepMerge(val)
+          }
+        } else {
+          result[key] = val
+        }
+      })
+    }
+  })
+  return result
+}

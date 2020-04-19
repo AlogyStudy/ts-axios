@@ -1,6 +1,7 @@
 import { AxiosRequestConfig, AxiosPromise, Method, AxiosResponse, ResolvedFn, RejectedFn } from '../types'
 import dispatchRequest from './dispatchRequest'
 import InterfaceManager from './InstanceManager'
+import mergetConfig from './mergeConfig'
 
 interface Intercepotors {
   request: InterfaceManager<AxiosRequestConfig>
@@ -34,10 +35,19 @@ export default class Axios {
       config = url
     }
 
+    config = mergetConfig(this.defaults, config)
+
     const chain: PromiseChain<any>[] = [{
       resolved: dispatchRequest,
       rejected: undefined
     }]
+
+    this.interceptors.request.forEach(interceptor => {
+      chain.unshift(interceptor)
+    })
+    this.interceptors.response.forEach(interceptor => {
+      chain.push(interceptor)
+    })
 
     return dispatchRequest(config)
   }

@@ -125,3 +125,9 @@ const chain: PromiseChain<any>[] = [{
 
 合并策略：
 默认配置的对象与自定义对象的合并，有些字段需要有单独的合并策略。
+
+主要处理：
+```
+data
+headres
+```
