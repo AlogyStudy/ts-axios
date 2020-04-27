@@ -51,7 +51,7 @@ axios({
 axios({
     method: 'post',
     url: '/base/post',
-    headres: {
+    headers: {
         'content-type': 'application/json',
         'Accept': 'application/json, text/plain, */*'
     },

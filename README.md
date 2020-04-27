@@ -129,5 +129,5 @@ const chain: PromiseChain<any>[] = [{
 主要处理：
 ```
 data
-headres
+headers
 ```

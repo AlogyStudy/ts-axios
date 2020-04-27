@@ -49,7 +49,15 @@ export default class Axios {
       chain.push(interceptor)
     })
 
-    return dispatchRequest(config)
+    let promise = Promise.resolve(config)
+    
+    // promise 链式调用
+    while(chain.length) {
+      const { resolved, rejected } = chain.shift()!
+      promise = promise.then(resolved, rejected)
+    }
+
+    return promise
   }
 
   get(url: string, config?: AxiosRequestConfig): AxiosPromise {

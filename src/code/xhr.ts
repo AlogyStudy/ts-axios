@@ -4,7 +4,7 @@ import { createError } from '../helpers/error'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headres = {}, responseType, timeout } = config
+    const { data = null, url, method = 'get', headers = {}, responseType, timeout } = config
 
     const req = new XMLHttpRequest()
 
@@ -46,11 +46,11 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     req.open(method.toUpperCase(), url!, true)
 
-    Object.keys(headres).forEach(name => {
+    Object.keys(headers).forEach(name => {
       if (data === null && name.toLowerCase() === 'content-type') {
-        delete headres[name]
+        delete headers[name]
       } else {
-        req.setRequestHeader(name, headres[name])
+        req.setRequestHeader(name, headers[name])
       }
     })
 
