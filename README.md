@@ -131,3 +131,21 @@ const chain: PromiseChain<any>[] = [{
 data
 headers
 ```
+
+> Axios.create()
+
+```typescript
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance
+}
+```
+-----
+```typescript
+axios.create = function create(config) {
+  return createInstance(mergeConfig(defaults, config))
+}
+```
+
+> 取消功能
+
+
