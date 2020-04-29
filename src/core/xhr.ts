@@ -4,13 +4,24 @@ import { createError } from '../helpers/error'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers = {}, responseType, timeout, cancelToken } = config
+    const { data = null, url, method = 'get', headers = {}, responseType, timeout, cancelToken, withCredentials } = config
 
     const request = new XMLHttpRequest()
 
     if (responseType) {
       request.responseType = responseType
     }
+
+    // 延时处理
+    if (timeout) {
+      request.timeout = timeout
+    }
+
+    if (withCredentials) {
+      request.withCredentials = withCredentials
+    }
+
+    request.open(method.toUpperCase(), url!, true)
 
     request.onreadystatechange = function handleLoad() {
       if (request.readyState !== 4) return
@@ -35,16 +46,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       // reject(new Error('Network Error'))
     }
 
-    // 延时处理
-    if (timeout) {
-      request.timeout = timeout
-    }
-
     request.ontimeout = function handleTimeout() {
       reject(createError(`Timeout of ${timeout} ms exceded`, config, 'ECONNABORTED', request))
     }
-
-    request.open(method.toUpperCase(), url!, true)
 
     Object.keys(headers).forEach(name => {
       if (data === null && name.toLowerCase() === 'content-type') {
