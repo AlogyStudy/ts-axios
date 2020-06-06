@@ -192,3 +192,35 @@ export interface CancelStatic {
 
 > XSRF 防御
 
+```typescript
+xsrfCookieName?: string,
+xsrfHeaderName?: string,
+```
+
+> 上传下载监控
+
+```typescript
+onDownloadProgress?: (e: ProgressEvent) => void,
+onUploadProgress?: (e: ProgressEvent) => void
+```
+
+顶部进度条：`nprogress`
+
+> HTTP授权
+
+```typescript
+auth?: AxiosBasicCredentials,
+
+export interface AxiosBasicCredentials {
+  username: string,
+  password: string
+}
+```
+
+> 自定义合法状态码
+
+`HTTP status`在200和300之间是一个合法值。
+
+```typescript
+validateStatus?: (status: number) => boolean
+```

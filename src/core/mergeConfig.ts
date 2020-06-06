@@ -5,7 +5,7 @@ const starts = Object.create(null)
 
 const startKeysFromVal2 = ['url', 'params', 'data']
 
-const startKeysDeepMerge = ['headers']
+const startKeysDeepMerge = ['headers', 'auth']
 
 startKeysFromVal2.map(key => {
     starts[key] = fromValu2Strat
