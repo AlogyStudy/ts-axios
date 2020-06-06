@@ -224,3 +224,15 @@ export interface AxiosBasicCredentials {
 ```typescript
 validateStatus?: (status: number) => boolean
 ```
+
+> 自定义参数序列化
+
+```typescript
+paramsSerializer?: (params: any) => string
+```
+
+> baseURL
+
+```typescript
+baseURL?: string
+```
