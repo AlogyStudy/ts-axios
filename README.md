@@ -236,3 +236,12 @@ paramsSerializer?: (params: any) => string
 ```typescript
 baseURL?: string
 ```
+
+> 静态方法扩展
+
+```typescript
+all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
+spread<T, R>(callback: (...args: T[]) => R): (arr: T[]) => R
+
+Axios: AxiosRequestConfig
+```
